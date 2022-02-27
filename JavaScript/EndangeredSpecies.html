@@ -1,50 +1,41 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-    <div>
-        <ul data-continent="North America">
-          <li data-species="California condor">Critically Endangered</li>
-          <li data-species="American bison">Near Threatened</li>
-        </ul>
-        <ul data-continent="Europe">
-          <li data-species="Cave bear">Extinct</li>
-        </ul>
-    </div>
-
-    <script type="text/javascript">
-        /*
-            https://www.testdome.com/questions/46758
-
-            Implement the function endangeredSpecies that returns how endangered a species is on a particular continent.
-            For example, endangeredSpecies('North America', 'American bison') should return 'Near Threatened'.
-        */
-        function endangeredSpecies(continent, species) {
-            const list = document.getElementsByTagName("UL");
-            var i = 0;
-            for (i=0;i<list.length;i++)
+function endangeredSpecies(continent, species) {
+    const list = document.getElementsByTagName("UL");
+    var i = 0;
+    for (i=0;i<list.length;i++)
+    {
+        if(list[i].dataset.continent==continent)
+        {
+            const childrenEl = list[i].children;
+            var j = 0;
+            for (j=0;j<childrenEl.length;j++)
             {
-                if(list[i].dataset.continent==continent)
+                if(childrenEl[j].dataset.species==species)
                 {
-                    const childrenEl = list[i].children;
-                    var j = 0;
-                    for (j=0;j<childrenEl.length;j++)
-                    {
-                        if(childrenEl[j].dataset.species==species)
-                        {
-                            return childrenEl[j].innerHTML;
-                        }
-                        else
-                        {
-                            continue;
-                        }
-                    }      
+                    return childrenEl[j].innerHTML;
                 }
                 else
                 {
                     continue;
                 }
-            }
+            }      
         }
-        
-        console.log(endangeredSpecies('North America', 'American bison')); // should print 'Near Threatened'
-    </script>
-</html>
+        else
+        {
+            continue;
+        }
+    }
+}
+
+// Example case
+document.body.innerHTML =
+`<div>
+  <ul data-continent="North America">
+    <li data-species="California condor">Critically Endangered</li>
+    <li data-species="American bison">Near Threatened</li>
+  </ul>
+  <ul data-continent="Europe">
+    <li data-species="Cave bear">Extinct</li>
+  </ul>
+</div>`;
+
+console.log(endangeredSpecies('North America', 'American bison')); // should print 'Near Threatened'
